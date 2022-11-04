@@ -1046,7 +1046,27 @@ class AndorSDK2Camera(camera.IBinROICamera, camera.IExposureCamera):
         The range is always a tuple with at least a single frame in it, and is guaranteed to already be valid.
         Always return tuple ``(frames, infos)``; if ``return_info==False``, ``infos`` value is ignored, so it can be anything (e.g., ``None``).
         """
+        if self.get_acquisition_mode=="fast_kinetic":
+            dim=512, 10 
+        else:
+            dim=self._get_data_dimensions_rc()
+        dt=np.dtype(self._default_image_dtype)
+        get_method=lib.GetImages16 if dt.itemsize<=2 else lib.GetImages
+        data,_,_=get_method(rng[0]+1,rng[1],dim[0]*dim[1]*(rng[1]-rng[0]))
+        data=self._convert_indexing(data.reshape((-1,dim[0],dim[1])),"rcb",axes=(1,2))
+        return list(data),None
+    
+    @_camfunc
+    def _read_FKframes(self, rng, return_info=False):
+        """
+        Read and return frames given the range.
+        
+        The range is always a tuple with at least a single frame in it, and is guaranteed to already be valid.
+        Always return tuple ``(frames, infos)``; if ``return_info==False``, ``infos`` value is ignored, so it can be anything (e.g., ``None``).
+        """
+        
         dim=self._get_data_dimensions_rc()
+        
         dt=np.dtype(self._default_image_dtype)
         get_method=lib.GetImages16 if dt.itemsize<=2 else lib.GetImages
         data,_,_=get_method(rng[0]+1,rng[1],dim[0]*dim[1]*(rng[1]-rng[0]))
