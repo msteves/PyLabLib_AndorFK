@@ -1057,7 +1057,7 @@ class AndorSDK2Camera(camera.IBinROICamera, camera.IExposureCamera):
         return list(data),None
     
     @_camfunc
-    def _read_FKframes(self, rng, return_info=False):
+    def read_FKframes(self, rng, return_info=False):
         """
         Read and return frames given the range.
         
@@ -1065,7 +1065,7 @@ class AndorSDK2Camera(camera.IBinROICamera, camera.IExposureCamera):
         Always return tuple ``(frames, infos)``; if ``return_info==False``, ``infos`` value is ignored, so it can be anything (e.g., ``None``).
         """
         
-        dim=self._get_data_dimensions_rc()
+        dim=512,10
         
         dt=np.dtype(self._default_image_dtype)
         get_method=lib.GetImages16 if dt.itemsize<=2 else lib.GetImages
