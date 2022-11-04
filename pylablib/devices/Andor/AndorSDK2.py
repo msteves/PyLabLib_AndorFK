@@ -727,6 +727,18 @@ class AndorSDK2Camera(camera.IBinROICamera, camera.IExposureCamera):
         lib.SetNumberKinetics(num_acc)
         lib.SetAccumulationCycleTime(cycle_time_acc)
         return (num_acc,cycle_time_acc)
+    
+    @_camfunc(setpar="acq_params/fast_kinetic",option=("acq",AC_ACQMODE.AC_ACQMODE_FASTKINETICS))
+    def setup_full_fast_kinetic_mode(self, exposedRows, seriesLength, time, mode, hbin, vbin, offset):
+        """
+        Switch into the fast kinetic acquisition mode and set up its parameters.
+        Modified to offer control over full FK mode features --MAS 11/22
+        """
+        
+        lib.SetAcquisitionMode(4)
+        lib.SetFastKineticsEx(exposedRows, seriesLength, time, mode, hbin, vbin, offset)
+        return (num_acc,cycle_time_acc)
+    
     @_camfunc(getpar="acq_params/fast_kinetic")
     def get_fast_kinetic_mode_parameters(self):
         """Return fast kinetic acquisition mode parameters ``(num_acc, cycle_time_acc)``"""
