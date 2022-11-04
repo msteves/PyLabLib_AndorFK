@@ -737,7 +737,7 @@ class AndorSDK2Camera(camera.IBinROICamera, camera.IExposureCamera):
         
         lib.SetAcquisitionMode(4)
         lib.SetFastKineticsEx(exposedRows, seriesLength, time, mode, hbin, vbin, offset)
-        return (num_acc,cycle_time_acc)
+        return (exposedRows, seriesLength, time, mode, hbin, vbin, offset)
     
     @_camfunc(getpar="acq_params/fast_kinetic")
     def get_fast_kinetic_mode_parameters(self):
