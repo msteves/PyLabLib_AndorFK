@@ -599,6 +599,15 @@ class AndorCamera(IDevice):
             self._setup_acquisition()
         self.get_buffer_size()
         lib.StartAcquisition()
+        
+    def quickstart_acquisition(self):
+        """
+        Start acquisition, without any of the checks typically called, to increase speed
+
+        """
+        
+        lib.StartAcquisition()
+        
     def stop_acquisition(self):
         """Stop acquisition"""
         self._camsel()
