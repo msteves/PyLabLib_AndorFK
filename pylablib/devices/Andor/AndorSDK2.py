@@ -999,7 +999,7 @@ class AndorSDK2Camera(camera.IBinROICamera, camera.IExposureCamera):
         lib.StartAcquisition()
     @_camfunc
     def quickstart_acquisition(self, *args, **kwargs):
-        super().quickstart_acquisition(*args,**kwargs)
+        #super().quickstart_acquisition(*args,**kwargs)
         lib.StartAcquisition()
     @_camfunc
     def stop_acquisition(self):
