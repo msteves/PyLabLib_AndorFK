@@ -998,6 +998,10 @@ class AndorSDK2Camera(camera.IBinROICamera, camera.IExposureCamera):
         self._frame_counter.reset(int(self.get_buffer_size()*0.9)) # keep some buffer excess to account fro frames lost while reading / between request and reading
         lib.StartAcquisition()
     @_camfunc
+    def quickstart_acquisition(self, *args, **kwargs):
+        super().quickstart_acquisition(*args,**kwargs)
+        lib.StartAcquisition()
+    @_camfunc
     def stop_acquisition(self):
         if self.acquisition_in_progress():
             self._frame_counter.update_acquired_frames(self._get_acquired_frames())
